@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Token Launch Radar</h1>
+    <p class="sub">Every protocol DefiLlama tracks that still records no token, ranked by what its launch would be worth — and how to farm it.</p>
+  </div>
+  <div class="meta" id="meta">Loading…</div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="board" role="tab">Board</button>
+  <button class="tab" data-tab="live" role="tab">Live tokens</button>
+  <button class="tab" data-tab="model" role="tab">Model &amp; method</button>
+</nav>
+
+<section id="tab-board" class="panel">
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search name or slug…" aria-label="Search">
+    <select id="cat" aria-label="Category"><option value="">All categories</option></select>
+    <select id="chain" aria-label="Chain"><option value="">All chains</option></select>
+    <label class="check"><input id="watch" type="checkbox"> Watchlist only</label>
+    <label class="range">Min TVL $<span id="tvlLabel">0</span>
+      <input id="tvl" type="range" min="0" max="9" step="1" value="0" aria-label="Minimum TVL">
+    </label>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="funnel" id="funnel"></div>
+  <table id="board">
+    <thead><tr>
+      <th data-sort="rank">#</th>
+      <th data-sort="name">Protocol</th>
+      <th data-sort="category">Category</th>
+      <th data-sort="chains">Chains</th>
+      <th data-sort="tvl_usd">TVL</th>
+      <th data-sort="change_7d">7d</th>
+      <th data-sort="implied_value_usd">Implied value</th>
+      <th></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="note">Implied values are this radar's own estimates from the snapshot's figures, never a promise that a token will launch or be worth that much. “No token recorded” means the snapshot's DefiLlama record carries none — not proof that none exists.</p>
+</section>
+
+<section id="tab-live" class="panel hidden">
+  <p class="intro">The market's own values, for calibration: the live-token protocols with the largest market caps in the same snapshot. The radar's base multiple is the median market-cap / TVL ratio of these comparables. They are never mixed into the ranked board.</p>
+  <table id="liveTable">
+    <thead><tr><th>#</th><th>Protocol</th><th>Category</th><th>TVL</th><th>Market cap</th><th>MCap / TVL</th></tr></thead>
+    <tbody id="liveRows"></tbody>
+  </table>
+</section>
+
+<section id="tab-model" class="panel hidden">
+  <h2>Model <span id="modelVersion"></span></h2>
+  <p class="intro">One formula scores every row, from the snapshot's own figures only. Nothing is hand-picked per protocol.</p>
+  <pre id="formula"></pre>
+  <h3>Build funnel</h3>
+  <table id="funnelTable">
+    <thead><tr><th>Step</th><th>Protocols</th><th>What happened</th></tr></thead>
+    <tbody id="funnelRows"></tbody>
+  </table>
+  <h3>Category breakdown</h3>
+  <table id="catTable">
+    <thead><tr><th>Category</th><th>Rows</th><th>Combined implied value</th><th>Share</th></tr></thead>
+    <tbody id="catRows"></tbody>
+  </table>
+  <h3>How to read a farm plan</h3>
+  <p class="intro">Each row carries five steps built from its own figures: a setup step, the core action for its category, a repeat cadence, a watch step for points or quest programs, and a monthly re-check against the radar's figures. Costs are starting points for a first position, not advice; a protocol that records no token may never issue one, and farming costs gas and time whether or not a launch follows.</p>
+</section>
+
+<aside id="drawer" class="drawer hidden" aria-label="Protocol detail">
+  <button id="close" class="close" aria-label="Close detail">×</button>
+  <div id="detail"></div>
+</aside>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
